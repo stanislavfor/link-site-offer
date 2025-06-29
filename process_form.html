@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Опросный лист</title>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="style.css">
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.getElementById('processForm');
+            const responseOutput = document.getElementById('response');
+            form.addEventListener('submit', async (event) => {
+                event.preventDefault(); // Отменяем стандартное поведение формы
+                responseOutput.textContent = "Отправка листа опроса...";
+                const formData = new FormData(form);
+                try {
+                    const response = await fetch('process_form.php', {
+                        method: 'POST',
+                        body: formData
+                    });
+                    const text = await response.text();
+                    responseOutput.textContent = text;
+                } catch (error) {
+                    responseOutput.textContent = "Ошибка при отправке листа опроса.";
+                }
+            });
+            // Обработчик сброса формы
+            form.addEventListener('reset', () => {
+                responseOutput.textContent = "* Отправить заполненный лист опроса"; // Очищаем поле ответа
+            });
+        });
+
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="section" id="section-auth-form">
+            <div class="main">
+                <div class="container-wrap">
+                    <div class="container-form">
+                        <h1>Добрый день!</h1>
+                        <p>Спасибо, что вы уделили время для нашего онлайн-опроса. Пожалуйста, ответьте на несколько вопросов, чтобы помочь нам улучшить наш продукт.</p>
+                        <form id="processForm">
+                            <label for="email">Ваш email:</label>
+                            <br>
+                            <input type="email" id="email" name="email" required>
+                            <br>
+                            <br>
+                            <label for="question1">1. Насколько важен для вас быстрый пользовательский интерфейс при работе с хостингом изображений? Почему?</label>
+                            <br>
+                            <textarea id="question1" name="question1"></textarea>
+                            <br>
+                            <br>
+                            <label for="question2">2. Имели ли вы опыт использования онлайн-редакторов изображений? Если да, какие функции были для вас наиболее полезными? Почему именно эти функции?</label>
+                            <br>
+                            <textarea id="question2" name="question2"></textarea>
+                            <br>
+                            <br>
+                            <label for="question3">3. Оцените по шкале от 1 до 5, насколько интегрированный онлайн-редактор облегчает вашу работу с графикой.</label>
+                            <br>
+                            <input type="radio" id="question3_1" name="question3" value="1"> 1 (совсем не облегчает)
+                            <br>
+                            <input type="radio" id="question3_2" name="question3" value="2"> 2
+                            <br>
+                            <input type="radio" id="question3_3" name="question3" value="3"> 3
+                            <br>
+                            <input type="radio" id="question3_4" name="question3" value="4"> 4
+                            <br>
+                            <input type="radio" id="question3_5" name="question3" value="5"> 5 (очень облегчает)
+                            <br>
+                            <br>
+                            <label for="question4">4. Насколько важно для вас иметь возможность обмениваться ссылками на изображения прямо на хостинге? Почему?</label>
+                            <br>
+                            <textarea id="question4" name="question4"></textarea>
+                            <br>
+                            <br>
+                            <label for="question5">5. Насколько важна для вас возможность получать прямые ссылки на загруженные изображения? Почему именно (укажите кратко причину)?</label>
+                            <br>
+                            <textarea id="question5" name="question5"></textarea>
+                            <br>
+                            <br>
+                            <label for="question6">6. Как часто вам приходится загружать изображения в Интернет для обмена ссылками или внедрения в ваши проекты?</label>
+                            <br>
+                            <input type="radio" id="question6_1" name="question6" value="Не использую"> Не использую
+                            <br>
+                            <input type="radio" id="question6_2" name="question6" value="Редко"> Редко
+                            <br>
+                            <input type="radio" id="question6_3" name="question6" value="Иногда"> Иногда
+                            <br>
+                            <input type="radio" id="question6_4" name="question6" value="Часто"> Часто
+                            <br>
+                            <input type="radio" id="question6_5" name="question6" value="Очень часто"> Очень часто
+                            <br>
+                            <br>
+                            <label for="question7">7. Какие основные цели вы преследуете при использовании хостинга изображений?</label>
+                            <br>
+                            <input type="checkbox" id="question7_1" name="question7[]" value="хранение файлов"> хранение файлов
+                            <br>
+                            <input type="checkbox" id="question7_2" name="question7[]" value="обмен ссылками"> обмен ссылками
+                            <br>
+                            <input type="checkbox" id="question7_3" name="question7[]" value="интеграция в вашим веб-сайтом или приложением"> интеграция в вашим веб-сайтом или приложением
+                            <br>
+                            <input type="checkbox" id="question7_4" name="question7[]" value="для работы в дизайне"> для работы в дизайне
+                            <br>
+                            <input type="checkbox" id="question7_5" name="question7[]" value="для учебных целей и другое"> для учебных целей и другое
+                            <br>
+                            <br>
+                            <label for="question8">8. Какие функции пользовательского интерфейса для вас наиболее важны при загрузке и управлении изображениями?</label>
+                            <br>
+                            <textarea id="question8" name="question8"></textarea>
+                            <br>
+                            <br>
+                            <label for="question9">9. По вашему мнению, насколько важна скорость загрузки и выгрузки изображений при использовании хостинга изображений?</label>
+                            <br>
+                            <input type="radio" id="question9_1" name="question9" value="1"> 1 (совсем не важно)
+                            <br>
+                            <input type="radio" id="question9_2" name="question9" value="2"> 2
+                            <br>
+                            <input type="radio" id="question9_3" name="question9" value="3"> 3
+                            <br>
+                            <input type="radio" id="question9_4" name="question9" value="4"> 4
+                            <br>
+                            <input type="radio" id="question9_5" name="question9" value="5"> 5 (очень важно)
+                            <br>
+                            <br>
+                            <label for="question10">10. Как вы оцениваете важность интегрированного онлайн-редактора изображений при выборе хостинга для изображений?</label>
+                            <br>
+                            <input type="radio" id="question10_1" name="question10" value="1"> 1 (совсем не важно)
+                            <br>
+                            <input type="radio" id="question10_2" name="question10" value="2"> 2
+                            <br>
+                            <input type="radio" id="question10_3" name="question10" value="3"> 3
+                            <br>
+                            <input type="radio" id="question10_4" name="question10" value="4"> 4
+                            <br>
+                            <input type="radio" id="question10_5" name="question10" value="5"> 5 (очень важно)
+                            <br>
+                            <br>
+                            <label for="question11">11. Какие дополнительные функции вы бы хотели видеть в хостинге изображений, чтобы сделать его более привлекательным для ваших нужд? Если нужны дополнительные функции, поясните.</label>
+                            <br>
+                            <textarea id="question11" name="question11"></textarea>
+                            <br>
+                            <br>
+                            <button class="email-button" style="margin-top: 5px; margin-bottom: 5px;" onclick="window.location.href='index.php'">на Главную</button>
+                            <input type="submit" class="email-button" value="Send *">
+                            <button type="reset" class="email-button">Reset</button>
+                        </form>
+                        <output id="response" style="margin-top: 5px;">
+                            <!-- Здесь будет отображаться результат -->* Отправить заполненный лист опроса
+                        </output>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

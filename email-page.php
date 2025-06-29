@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Images Hosting</title>
+    <link rel="icon" href="favicon.ico" sizes="any" type="image/x-icon">
+    <link rel="stylesheet" href="style.css">
+    <style>
+
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.getElementById('contactForm');
+            const responseOutput = document.getElementById('response');
+            form.addEventListener('submit', async (event) => {
+                event.preventDefault(); // Отменяем стандартное поведение формы
+                responseOutput.textContent = "Отправка сообщения...";
+                const formData = new FormData(form);
+                try {
+                    const response = await fetch('send_message.php', {
+                        method: 'POST',
+                        body: formData
+                    });
+                    const text = await response.text();
+                    responseOutput.textContent = text;
+                } catch (error) {
+                    responseOutput.textContent = "Ошибка при отправке сообщения.";
+                }
+            });
+            // Обработчик сброса формы
+            form.addEventListener('reset', () => {
+                responseOutput.textContent = "* Отправить"; // Очищаем поле ответа
+            });
+        });
+
+    </script>
+</head>
+
+<body class="email-page">
+    <div class="email-container">
+        <div class="text-block">
+            <h2>Здравствуйте!</h2>
+            <br>
+            <p>Наш Хостинг изображений предлагает удобные тарифы и сервисы для работы с файлами изображений.</p>
+            <p>Мы хотели бы узнать, какой тариф хостинга изображений вас интересует. Пожалуйста, отправьте нам сообщение, и мы вышлем вам подробный список услуг и тарифов.</p>
+            <p>Если у вас вопросы по работе сервиса или вы имеете рекомендацию, предложение по развитию Хостинга, пожалуйста, оставьте свои контактные данные, мы свяжемся с вами указанным способом для уточнения вопросов.</p>
+            <h3>Спасибо за проявленный интерес!</h3>
+            <form action="index.php#promo" target="_self" style="margin-top: 5px;">
+                <button class="email-button">на Главную</button>
+            </form>
+        </div>
+        <div class="form-block">
+            <h2>Отправьте сообщение</h2>
+            <form id="contactForm">
+                <label for="name">Ваше Имя:</label>
+                <input type="text" id="name" name="name">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+                <label for="message">Ваше сообщение:</label>
+                <textarea id="message" name="message" rows="7"></textarea>
+                <button type="submit" class="email-button">Send*</button>
+                <button type="reset" class="email-button">Reset</button>
+            </form>
+            <output id="response">
+                <!-- Здесь будет отображаться результат -->* Отправить
+            </output>
+        </div>
+    </div>
+</body>
+
+</html>

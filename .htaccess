@@ -1,0 +1,11 @@
+RewriteEngine On
+
+# Удаляем .php из URL
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}\.php -f
+RewriteRule ^(.+)$ $1.php [L,QSA]
+
+
+
+# Устанавливаем index.php как главную страницу
+# DirectoryIndex index.php
